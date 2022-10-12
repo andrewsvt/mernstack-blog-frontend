@@ -1,0 +1,29 @@
+.root {
+  background-color: #fff;
+  padding: 16px 0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  padding-top: 8px;
+  width: 100px;
+}
+
+.buttons {
+  button {
+    margin-left: 10px;
+    border-radius: 12px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
