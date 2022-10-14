@@ -28,7 +28,7 @@ const postsSlice = createSlice({
   reducers: {}, //will update state
   extraReducers: {
     // update status of posts
-    [fetchPosts.pending]: (state, action) => {
+    [fetchPosts.pending]: (state) => {
       state.posts.items = [];
       state.posts.status = 'loading';
     },
@@ -36,12 +36,12 @@ const postsSlice = createSlice({
       state.posts.items = action.payload;
       state.posts.status = 'loaded';
     },
-    [fetchPosts.rejected]: (state, action) => {
+    [fetchPosts.rejected]: (state) => {
       state.posts.items = [];
       state.posts.status = 'error';
     },
     // update status of tags
-    [fetchTags.pending]: (state, action) => {
+    [fetchTags.pending]: (state) => {
       state.tags.items = [];
       state.tags.status = 'loading';
     },
@@ -49,7 +49,7 @@ const postsSlice = createSlice({
       state.tags.items = action.payload;
       state.tags.status = 'loaded';
     },
-    [fetchTags.rejected]: (state, action) => {
+    [fetchTags.rejected]: (state) => {
       state.tags.items = [];
       state.tags.status = 'error';
     },
