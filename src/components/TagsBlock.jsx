@@ -15,7 +15,7 @@ export const TagsBlock = ({ items, isLoading = true }) => {
   return (
     <SideBlock title="Popular tags">
       <List>
-        {(isLoading ? [...Array(5)] : items).map((name, index) => (
+        {(isLoading ? [...Array(5)] : items[0] ? items : ['lonelytag']).map((name, index) => (
           <Link key={index} style={{ textDecoration: 'none', color: 'black' }} to={`/tags/${name}`}>
             <ListItem disablePadding>
               <ListItemButton>

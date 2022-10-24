@@ -26,7 +26,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state, action) => {
-      console.log(action, state);
       state.userData = null;
     },
   },
@@ -74,7 +73,6 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-// export default authReducer;
 
 export const { logout } = authSlice.actions;
 export const AuthSelector = (state) => Boolean(state.auth.userData);
