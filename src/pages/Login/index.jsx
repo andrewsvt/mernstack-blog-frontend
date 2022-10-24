@@ -10,8 +10,18 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import styles from './Login.module.scss';
+
+const schema = yup.object({
+  email: yup.string().required('Required field').email("It doesn't seem to be an email..."),
+  password: yup
+    .string()
+    .required('Required field')
+    .min(6, 'Password must be at least 6 characters'),
+});
 
 export const Login = () => {
   const isAuth = useSelector(AuthSelector); //user is authorized or not
@@ -21,7 +31,6 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
@@ -29,17 +38,8 @@ export const Login = () => {
       password: '123456',
     },
     criteriaMode: 'onChange',
-    shouldFocusError: true,
+    resolver: yupResolver(schema),
   });
-
-  React.useEffect(() => {
-    setError('password', {
-      types: {
-        minLength: 'Must be at least',
-      },
-    });
-    console.log('errors seted');
-  }, [setError]);
 
   const onSubmit = async (data) => {
     const userData = await dispatch(fetchLoginData(data));

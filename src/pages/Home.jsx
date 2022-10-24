@@ -13,6 +13,7 @@ import { CommentsBlock } from '../components/CommentsBlock';
 export const Home = () => {
   const dispatch = useDispatch();
   const { posts, tags } = useSelector((state) => state.posts);
+  const userData = useSelector((state) => state.auth.userData);
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
@@ -21,6 +22,8 @@ export const Home = () => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
   }, [dispatch]);
+
+  // !isPostsLoading && console.log(`${userData._id} and ${posts.items[0].user._id}`);
 
   return (
     <>
@@ -38,13 +41,13 @@ export const Home = () => {
                 key={obj._id}
                 id={obj._id}
                 title={obj.title}
-                imageUrl={obj.imageUrl}
+                imageUrl={obj.imageUrl && `http://localhost:8000${obj.imageUrl}`}
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
                 commentsCount={3}
                 tags={obj.tags}
-                isEditable
+                isEditable={userData?._id === obj.user._id}
               />
             ),
           )}

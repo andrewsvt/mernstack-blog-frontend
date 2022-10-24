@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+
 import clsx from 'clsx';
 
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +14,7 @@ import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import classes from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
+import { fetchRemovePost } from '../../redux/slices/postsSlice';
 
 export const Post = ({
   id,
@@ -27,11 +30,17 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
+  const dispatch = useDispatch();
+
   if (isLoading) {
     return <PostSkeleton />;
   }
 
-  const onClickRemove = () => {};
+  const onClickRemove = () => {
+    if (window.confirm('Are you sure you want to delete post?')) {
+      dispatch(fetchRemovePost(id));
+    }
+  };
 
   return (
     <div className={clsx(classes.root, { [classes.rootFull]: isFullPost })}>

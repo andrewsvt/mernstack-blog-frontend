@@ -11,8 +11,19 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import styles from './Login.module.scss';
+
+const schema = yup.object({
+  fullName: yup.string().required('Required field').min(3, 'How can a name be so short?'),
+  email: yup.string().required('Required field').email("It doesn't seem to be an email..."),
+  password: yup
+    .string()
+    .required('Required field')
+    .min(6, 'Password must be at least 6 characters'),
+});
 
 export const Registration = () => {
   const isAuth = useSelector(AuthSelector); //user is authorized or not
@@ -29,7 +40,8 @@ export const Registration = () => {
       email: 'uchiha21@gmail.com',
       password: '123456',
     },
-    mode: 'onChange',
+    criteriaMode: 'onChange',
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {

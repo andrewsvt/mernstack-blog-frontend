@@ -6,6 +6,8 @@ import { Post } from '../components/Post';
 import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 
+import ReactMarkdown from 'react-markdown';
+
 export const FullPost = () => {
   const [postData, setPostData] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -32,14 +34,14 @@ export const FullPost = () => {
         <Post
           id={postData._id}
           title={postData.title}
-          imageUrl={postData.imageUrl}
+          imageUrl={postData.imageUrl && `http://localhost:8000${postData.imageUrl}`}
           user={postData.user}
           createdAt={postData.createdAt}
           viewsCount={postData.viewsCount}
           commentsCount={3}
           tags={postData.tags}
           isFullPost>
-          <p>{postData.text}</p>
+          <ReactMarkdown children={postData.text} />
         </Post>
 
         <CommentsBlock
