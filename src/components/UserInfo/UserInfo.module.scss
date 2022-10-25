@@ -17,10 +17,12 @@
 
 .userDetails {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
 }
 
 .additional {
   font-size: 12px;
   opacity: 0.6;
+  margin-left: 12px;
 }

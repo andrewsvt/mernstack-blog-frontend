@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
@@ -18,22 +18,40 @@ export const Home = () => {
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
 
+  const [postsData, setPostsData] = useState([]);
+  const [sortType, setSortType] = useState(0);
+
   useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
   }, [dispatch]);
 
-  // !isPostsLoading && console.log(`${userData._id} and ${posts.items[0].user._id}`);
+  useEffect(() => {
+    // const viewsArray = posts.items.map((e) => e.viewsCount);
+    // console.log(viewsArray.sort(compareViews));
+
+    setPostsData([...posts.items].sort((a, b) => b.viewsCount - a.viewsCount));
+
+    return () => {};
+  }, [posts]);
+
+  const handleTabChange = (event, newValue) => {
+    setSortType(newValue);
+  };
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Tab label="New" />
-        <Tab label="Popular" />
+      <Tabs
+        onChange={handleTabChange}
+        style={{ marginBottom: 15 }}
+        value={sortType}
+        aria-label="basic tabs example">
+        <Tab label="New" value={0} />
+        <Tab label="Popular" value={1} />
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
+          {(isPostsLoading ? [...Array(5)] : sortType ? postsData : posts.items).map((obj, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
             ) : (
@@ -43,7 +61,7 @@ export const Home = () => {
                 title={obj.title}
                 imageUrl={obj.imageUrl && `http://localhost:8000${obj.imageUrl}`}
                 user={obj.user}
-                createdAt={obj.createdAt}
+                createdAt={obj.createdAt.split('T')[0]}
                 viewsCount={obj.viewsCount}
                 commentsCount={3}
                 tags={obj.tags}
