@@ -27,9 +27,6 @@ export const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // const viewsArray = posts.items.map((e) => e.viewsCount);
-    // console.log(viewsArray.sort(compareViews));
-
     setPostsData([...posts.items].sort((a, b) => b.viewsCount - a.viewsCount));
 
     return () => {};
