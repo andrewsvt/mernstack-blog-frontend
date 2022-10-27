@@ -36,7 +36,7 @@ export const FullPost = () => {
           title={postData.title}
           imageUrl={postData.imageUrl && `http://localhost:8000${postData.imageUrl}`}
           user={postData.user}
-          createdAt={postData.createdAt}
+          createdAt={postData.createdAt.split('T')[0]}
           viewsCount={postData.viewsCount}
           commentsCount={3}
           tags={postData.tags}

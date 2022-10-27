@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector, fetchLoginData } from '../../redux/slices/authSlice';
@@ -31,13 +31,13 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: {
-      email: 'andreycome03@gmail.com',
-      password: '123456',
+      email: 'test@test.mail',
+      password: '121212',
     },
-    criteriaMode: 'onChange',
+    criteriaMode: 'firstError',
     resolver: yupResolver(schema),
   });
 
@@ -81,10 +81,16 @@ export const Login = () => {
           fullWidth
           {...register('password', { required: true })}
         />
-        <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
+        <Button type="submit" size="large" variant="contained" fullWidth>
           Log In
         </Button>
       </form>
+      <div className={styles.register}>
+        <span>Don't have an account?</span>
+        <Button size="large" color="primary">
+          <Link to="/register">Sign Up</Link>
+        </Button>
+      </div>
     </Paper>
   );
 };

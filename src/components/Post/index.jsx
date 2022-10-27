@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
-import classes from './Post.module.scss';
+import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import { fetchRemovePost } from '../../redux/slices/postsSlice';
@@ -43,41 +43,41 @@ export const Post = ({
   };
 
   return (
-    <div className={clsx(classes.root, { [classes.rootFull]: isFullPost })}>
+    <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
-        <div className={classes.editButtons}>
+        <div className={styles.editButtons}>
           <Link to={`/post/${id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
           </Link>
-          <IconButton onClick={onClickRemove} color="secondary">
+          <IconButton onClick={onClickRemove} color="dark">
             <DeleteIcon />
           </IconButton>
         </div>
       )}
-      {imageUrl && (
-        <img
-          className={clsx(classes.image, { [classes.imageFull]: isFullPost })}
-          src={imageUrl}
-          alt={title}
-        />
-      )}
-      <div className={classes.wrapper}>
+      <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />
-        <div className={classes.indention}>
-          <h2 className={clsx(classes.title, { [classes.titleFull]: isFullPost })}>
+        <div className={styles.indention}>
+          <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
             {isFullPost ? title : <Link to={`/post/${id}`}>{title}</Link>}
           </h2>
-          <ul className={classes.tags}>
+          {imageUrl && (
+            <img
+              className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+              src={imageUrl}
+              alt={title}
+            />
+          )}
+          <ul className={styles.tags}>
             {tags.map((name, index) => (
               <li key={index}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+                <Link to={`/tags/${name}`}>#{name}</Link>
               </li>
             ))}
           </ul>
-          {children && <div className={classes.content}>{children}</div>}
-          <ul className={classes.postDetails}>
+          {children && <div className={styles.content}>{children}</div>}
+          <ul className={styles.postDetails}>
             <li>
               <EyeIcon />
               <span>{viewsCount}</span>

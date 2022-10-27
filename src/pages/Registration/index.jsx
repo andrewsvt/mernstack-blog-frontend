@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { AuthSelector, fetchLoginData, fetchRegisterData } from '../../redux/slices/authSlice';
+import { AuthSelector, fetchRegisterData } from '../../redux/slices/authSlice';
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -33,14 +33,14 @@ export const Registration = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: {
-      fullName: 'Sasuke Uchiha',
-      email: 'uchiha21@gmail.com',
-      password: '123456',
+      fullName: '',
+      email: '',
+      password: '',
     },
-    criteriaMode: 'onChange',
+    criteriaMode: 'firstError',
     resolver: yupResolver(schema),
   });
 
@@ -59,7 +59,11 @@ export const Registration = () => {
   }
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper
+      classes={{ root: styles.root }}
+      sx={{
+        borderRadius: '12px',
+      }}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Join us.
       </Typography>
@@ -91,7 +95,7 @@ export const Registration = () => {
           fullWidth
           {...register('password', { required: 'Enter password' })}
         />
-        <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
+        <Button type="submit" size="large" variant="contained" fullWidth>
           Sing Up
         </Button>
       </form>
