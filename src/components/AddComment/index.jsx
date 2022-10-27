@@ -10,7 +10,10 @@ export const Index = () => {
   return (
     <>
       <div className={styles.root}>
-        <Avatar styles={{ root: styles.avatar }} src="https://mui.com/static/images/avatar/5.jpg" />
+        <Avatar
+          classes={{ root: styles.avatar }}
+          src="https://mui.com/static/images/avatar/5.jpg"
+        />
         <div className={styles.form}>
           <TextField
             label="Resond to the author"

@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector, fetchAuthMe } from './redux/slices/authSlice';
 
 import Container from '@mui/material/Container';
+import { SnackbarProvider } from 'notistack';
 
 import { Header } from './components';
-import { Home, FullPost, Registration, AddPost, Login } from './pages';
+import { Home, FullPost, Registration, AddPost, Login, Tag } from './pages';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
       <Header />
       <Container maxWidth="lg">
         <Routes>
@@ -27,9 +28,10 @@ function App() {
           <Route path="/add-post" element={<AddPost />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route path="/tags/:tag" element={<Tag />} />
         </Routes>
       </Container>
-    </>
+    </SnackbarProvider>
   );
 }
 

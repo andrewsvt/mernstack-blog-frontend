@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector, logout } from '../../redux/slices/authSlice';
 
 import styles from './Header.module.scss';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
+import { Container, IconButton } from '@mui/material';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonIcon from '@mui/icons-material/Person';
 
 import Logo from '../../assets/Logo.svg';
 
@@ -32,19 +35,23 @@ export const Header = () => {
             {isAuth ? (
               <>
                 <Link to="/add-post">
-                  <Button variant="contained">Write a story</Button>
+                  <IconButton color="primary" aria-label="Write a story" size="large">
+                    <DriveFileRenameOutlineIcon fontSize="inherit" />
+                  </IconButton>
                 </Link>
-                <Button onClick={onClickLogout} variant="contained" color="error">
-                  Log Out
-                </Button>
+                <IconButton onClick={onClickLogout} color="dark" aria-label="Log Out" size="large">
+                  <LogoutIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton aria-label="Account" size="large">
+                  <PersonIcon color="secondary" fontSize="inherit" />
+                </IconButton>
               </>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outlined">Log In</Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="contained">Sign Up</Button>
+                  <IconButton aria-label="Log In" size="large">
+                    <LoginIcon color="primary" fontSize="inherit" />
+                  </IconButton>
                 </Link>
               </>
             )}

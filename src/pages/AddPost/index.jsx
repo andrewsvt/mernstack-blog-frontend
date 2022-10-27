@@ -1,9 +1,10 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams, Link } from 'react-router-dom';
 
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import { TextField, Paper, Button, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useSnackbar } from 'notistack';
+
 import SimpleMDE from 'react-simplemde-editor';
 
 import { useSelector } from 'react-redux';
@@ -27,6 +28,8 @@ export const AddPost = () => {
   const [isLoading, setLoading] = useState(false);
 
   const inputFileRef = useRef(null);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const isEditing = Boolean(id);
 
@@ -88,9 +91,15 @@ export const AddPost = () => {
 
       const currentPostId = isEditing ? id : data._id;
       navigate(`/post/${currentPostId}`);
+
+      enqueueSnackbar(isEditing ? 'Your post has been updated!' : 'Your post has been published!', {
+        variant: 'success',
+      });
     } catch (error) {
       console.warn(error);
-      alert('Upload error');
+      enqueueSnackbar('Upload error', {
+        variant: 'error',
+      });
     }
   };
 
@@ -115,15 +124,23 @@ export const AddPost = () => {
 
   return (
     <Paper style={{ padding: 30 }}>
-      <Button onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
+      <Button
+        disabled={imageUrl}
+        onClick={() => inputFileRef.current.click()}
+        variant="outlined"
+        size="large">
         Load thumbnail
       </Button>
       <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <>
-          <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-            Delete
-          </Button>
+          <IconButton
+            sx={{ marginLeft: '12px' }}
+            onClick={onClickRemoveImage}
+            aria-label="Delete image"
+            size="large">
+            <DeleteIcon color="dark" fontSize="inherit" />
+          </IconButton>
           <img className={styles.image} src={`http://localhost:8000${imageUrl}`} alt="Uploaded" />
         </>
       )}
@@ -140,7 +157,7 @@ export const AddPost = () => {
       <TextField
         classes={{ root: styles.tags }}
         variant="standard"
-        placeholder="Тэги"
+        placeholder="Tags"
         value={tags}
         onChange={(e) => setTags(e.target.value)}
         fullWidth
@@ -150,9 +167,9 @@ export const AddPost = () => {
         <Button onClick={onSubmit} size="large" variant="contained">
           {isEditing ? 'Save' : 'Publish'}
         </Button>
-        <a href="/">
+        <Link to="/">
           <Button size="large">Cancel</Button>
-        </a>
+        </Link>
       </div>
     </Paper>
   );
