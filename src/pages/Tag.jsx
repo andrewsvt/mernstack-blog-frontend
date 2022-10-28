@@ -45,7 +45,7 @@ export const Tag = () => {
                   key={obj._id}
                   id={obj._id}
                   title={obj.title}
-                  imageUrl={obj.imageUrl && `http://localhost:8000${obj.imageUrl}`}
+                  imageUrl={obj.imageUrl && process.env.REACT_APP_API_URL + obj.imageUrl}
                   user={obj.user}
                   createdAt={obj.createdAt.split('T')[0]}
                   viewsCount={obj.viewsCount}

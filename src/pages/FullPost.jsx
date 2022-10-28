@@ -34,7 +34,7 @@ export const FullPost = () => {
         <Post
           id={postData._id}
           title={postData.title}
-          imageUrl={postData.imageUrl && `http://localhost:8000${postData.imageUrl}`}
+          imageUrl={postData.imageUrl && process.env.REACT_APP_API_URL + postData.imageUrl}
           user={postData.user}
           createdAt={postData.createdAt.split('T')[0]}
           viewsCount={postData.viewsCount}

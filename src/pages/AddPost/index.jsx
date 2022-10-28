@@ -141,7 +141,11 @@ export const AddPost = () => {
             size="large">
             <DeleteIcon color="dark" fontSize="inherit" />
           </IconButton>
-          <img className={styles.image} src={`http://localhost:8000${imageUrl}`} alt="Uploaded" />
+          <img
+            className={styles.image}
+            src={process.env.REACT_APP_API_URL + imageUrl}
+            alt="Uploaded"
+          />
         </>
       )}
       <br />
